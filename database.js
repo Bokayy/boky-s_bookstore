@@ -78,7 +78,6 @@ export async function searchBook(query){
     return insertedBook;
 }
 
-console.log(await searchBook("MongoDB"));
 
 const testJsonObj=
 {
