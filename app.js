@@ -14,8 +14,8 @@ app.use(express.json());
 
 //get all books
 app.get("/books", async (req, res) => {
-    const notes = await getAllBooks();
-    res.send(notes);
+    const allBooks = await getAllBooks();
+    res.send(allBooks);
 });
 
 //get book by id
@@ -24,15 +24,14 @@ app.get("/books/:id", async (req, res) => {
     const note = await getBookByID(id);
     if (!note) {
         // If the note is not found,send a 404 (Not Found) response.
-        return res.status(404).json({ error: "Note not found" });
+        return res.status(404).json({ error: "Book not found" });
     }
     res.send(note);
 })
-
 //create new book
 app.post("/books", async (req, res) => {
-    const {title, contents} = req.body;
-    const note = await createNote(title,subtitle,isbn13,price,image,url);
+    const {title,subtitle,isbn13,price,image,url} = req.body; //destructured the request
+    const note = await createBook(title,subtitle,isbn13,price,image,url);
     res.status(201).send(note);
 })
 
