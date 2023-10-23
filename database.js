@@ -64,4 +64,52 @@ export async function removeBook(id) {
 
 //await createBook("Learning C#","","1001620983322","0.00","https://itbook.store/img/books/1001620983322.png","https://itbook.store/books/1001620983322");
 
-console.log(await removeBook(3));
+//console.log(await removeBook(3));
+
+//results matchd by title
+export async function searchBook(query){
+    const [result] = await pool.query(`
+    SELECT * 
+    FROM books 
+    WHERE title LIKE ?`,
+    [query]);
+    const id = result.id;
+    const insertedBook = await getBookByID(id);
+    return insertedBook;
+}
+
+console.log(await searchBook("MongoDB"));
+
+const testJsonObj=
+{
+    "title": "Microsoft ASP.NET and AJAX",
+    "subtitle": "Architecting Web Applications",
+    "isbn13": "9780735626218",
+    "price": "$17.37",
+    "image": "https://itbook.store/img/books/9780735626218.png",
+    "url": "https://itbook.store/books/9780735626218"
+};
+
+//import JSON to Database
+//todo: validation (is every field filled in and valid)
+export async function JSONtoDB(jsonObj)
+{   
+    jsonObj["price"] = jsonObj["price"].replace(/\$/g, ''); //dollar sign removal
+    const [result] = await pool.query
+    (`
+        INSERT INTO
+        books(title,subtitle,isbn13,price,image,url)
+        VALUES(?,?,?,?,?,?)`,
+
+        [jsonObj["title"],
+        jsonObj["subtitle"],
+        jsonObj["isbn13"],
+        jsonObj["price"],
+        jsonObj["image"],
+        jsonObj["url"]]
+    );
+    const id = result.insertId;
+    const insertedBook = await getBookByID(id);
+    console.log(insertedBook);
+    return insertedBook;
+};
