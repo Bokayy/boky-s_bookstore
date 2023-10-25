@@ -62,20 +62,30 @@ export async function removeBook(id) {
     return result;
   }
 
-//await createBook("Learning C#","","1001620983322","0.00","https://itbook.store/img/books/1001620983322.png","https://itbook.store/books/1001620983322");
-
-//console.log(await removeBook(3));
-
 //results matchd by title
 export async function searchBook(query){
     const [result] = await pool.query(`
     SELECT * 
     FROM books 
-    WHERE title LIKE ?`,
+    WHERE title LIKE "%${query}%"
+    OR subtitle LIKE 
+    "%${query}%"`,
     [query]);
-    const id = result.id;
-    const insertedBook = await getBookByID(id);
-    return insertedBook;
+    //console.log(result);
+    return searchWithMetadata(result);
+    //return result;
+}
+
+export function searchWithMetadata(query){
+    let total = (query.length.toString()); 
+    const page = "1" 
+    let books = query;  
+    let returnValue = {
+        "total": total,
+        "page": page,
+        "books": books,
+    }
+    return returnValue;
 }
 
 

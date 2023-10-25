@@ -5,12 +5,25 @@ import {
     createBook,
     getBookByExactTitle,
     getBookByID,
-    JSONtoDB} 
+    JSONtoDB,
+    searchBook} 
 from "./database.js";
 
 const app = express();
 
 app.use(express.json());
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:9000'); // Replace with the origin of your frontend application
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+  });
+
+//automatic async error handling
+app.use((err, req, res, next) => {
+    console.error(err.stack)
+    res.status(500).send( 'Something broke!')
+})
 
 //get all books
 app.get("/books", async (req, res) => {
@@ -35,13 +48,16 @@ app.post("/books", async (req, res) => {
     res.status(201).send(note);
 })
 
-//automatic async error handling
-app.use((err, req, res, next) => {
-    console.error(err.stack)
-    res.status(500).send( 'Something broke!')
+app.get("/books/search/:query", async (req, res) => {
+    const query = req.params.query;
+    const books = await searchBook(query);
+    res.send(books);
 })
+
 
 //init server
 app.listen(8080, ()=> {
     console.log('Server is running on port 8080')
 })
+
+  
