@@ -64,16 +64,21 @@ export async function removeBook(id) {
 
 //results matchd by title
 export async function searchBook(query){
-    const [result] = await pool.query(`
-    SELECT * 
-    FROM books 
-    WHERE title LIKE "%${query}%"
-    OR subtitle LIKE 
-    "%${query}%"`,
-    [query]);
-    //console.log(result);
-    return searchWithMetadata(result);
-    //return result;
+    try {
+        const [result] = await pool.query(`
+        SELECT * 
+        FROM books 
+        WHERE title LIKE 
+        "%${query}%"
+        OR subtitle LIKE 
+        "%${query}%"`,
+        [query]);
+        return searchWithMetadata(result);
+    }
+    catch (error) {
+        console.error('Error executing searchBook query:', error);
+        throw error;
+      }
 }
 
 export function searchWithMetadata(query){
