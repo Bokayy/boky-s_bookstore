@@ -65,14 +65,15 @@ export async function removeBook(id) {
 //results matchd by title
 export async function searchBook(query){
     try {
-        const [result] = await pool.query(`
+        const [result] = await pool.query(
+        `
         SELECT * 
         FROM books 
-        WHERE title LIKE 
-        "%${query}%"
-        OR subtitle LIKE 
-        "%${query}%"`,
-        [query]);
+        WHERE LOWER(title) LIKE 
+        '%${query}%'
+        OR LOWER(subtitle) LIKE 
+        '%${query}%'`,
+        [query.toLowerCase()]);
         return searchWithMetadata(result);
     }
     catch (error) {
