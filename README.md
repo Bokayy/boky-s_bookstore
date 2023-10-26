@@ -3,10 +3,13 @@
 A simple fullstack application which uses Node JS, Vue JS, and Express.js to bring you a lovely little emulation of itbooks.store/'s API.
 
 Dependencies:
-node
+node,
 mysql
 
+
+
 Guide to running the app:
+
 run the included "database.sql" after you've installed mysql on your pc 
 to populate the database.
 
@@ -20,8 +23,13 @@ run "npm run dev"
 The interface will now be running on localhost:9000!
 
 Todo: 
+
 input validation
+
 api scraper to populate with more books from itbooks (JSONtoDB function expansion)
+
 more CRUD
+
 Hosting on my VPS
+
 etc...
