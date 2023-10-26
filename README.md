@@ -23,5 +23,5 @@ Todo:
 input validation
 api scraper to populate with more books from itbooks (JSONtoDB function expansion)
 more CRUD
-multiple frontend routes
+Hosting on my VPS
 etc...
