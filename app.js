@@ -32,8 +32,14 @@ app.get("/books", async (req, res) => {
     res.send(allBooks);
 });
 
+app.get("/books/search", async (req, res) => {
+    const query = req.query.q;
+    const books = await searchBook(query);
+    res.send(books);
+})
+
 //get book by id
-app.get("/books/:id", async (req, res) => {
+app.get("/books/:id(\\d+$)", async (req, res) => {
     const id = req.params.id;
     const note = await getBookByID(id);
     if (!note) {
@@ -49,11 +55,7 @@ app.post("/books", async (req, res) => {
     res.status(201).send(note);
 })
 
-app.get("/books/search/:query", async (req, res) => {
-    const query = req.params.query;
-    const books = await searchBook(query);
-    res.send(books);
-})
+
 
 
 //init server
