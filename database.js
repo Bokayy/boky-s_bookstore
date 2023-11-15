@@ -1,6 +1,5 @@
 import mysql from 'mysql2';
 import dotenv from 'dotenv'
-
 dotenv.config()
 
 const pool = mysql.createPool({
@@ -14,9 +13,6 @@ export async function getAllBooks(){
     const [rows] = await pool.query(`SELECT * FROM books`);
     return rows;
 }
-
-//console.log(await getAllBooks());
-
 export async function getBookByExactTitle(title){
     const [rows] = await pool.query(
         `SELECT *
@@ -26,7 +22,6 @@ export async function getBookByExactTitle(title){
         [title]);
     return rows[0]; // return the first object in the array;
 }
-
 export async function getBookByID(id){
     const [rows] = await pool.query(
         `SELECT *
@@ -36,9 +31,6 @@ export async function getBookByID(id){
         [id]);
     return rows[0]; // return the first object in the array;
 }
-
-//console.log(await getBookByExactTitle("Practical MongoDB"));
-
 export async function createBook(title,subtitle,isbn13,price,image,url){
     const [result] = await pool.query(`
     INSERT INTO
@@ -51,7 +43,6 @@ export async function createBook(title,subtitle,isbn13,price,image,url){
     console.log(insertedBook);
     return insertedBook; // return the inserted book for debugging purposes
 }
-
 export async function removeBook(id) {
     const [result] = await pool.query(`
       DELETE FROM
@@ -61,8 +52,7 @@ export async function removeBook(id) {
     );
     return result;
   }
-
-//results matchd by title
+//results matched by title
 export async function searchBook(query){
     try {
         const [result] = await pool.query(
@@ -81,7 +71,6 @@ export async function searchBook(query){
         throw error;
       }
 }
-
 export function searchWithMetadata(query){
     let total = (query.length.toString()); 
     const page = "1" 
@@ -93,8 +82,6 @@ export function searchWithMetadata(query){
     }
     return returnValue;
 }
-
-
 const testJsonObj=
 {
     "title": "Microsoft ASP.NET and AJAX",
@@ -104,7 +91,6 @@ const testJsonObj=
     "image": "https://itbook.store/img/books/9780735626218.png",
     "url": "https://itbook.store/books/9780735626218"
 };
-
 //import JSON to Database
 //todo: validation (is every field filled in and valid)
 export async function JSONtoDB(jsonObj)
