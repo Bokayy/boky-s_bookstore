@@ -70,6 +70,7 @@ app.post("/insert", async (req,res) => {
         fs.mkdirSync(logsFolderPath);
       }
     //check if folder exists, if not, make it
+    console.log(JSON.stringify(req.body));
     let fileContent = JSON.stringify(req.body);
 
     fs.writeFile(`${logsFolderPath}${fileName}`, fileContent, (err)=> {
