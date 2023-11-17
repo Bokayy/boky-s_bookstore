@@ -15,6 +15,25 @@ import {
     searchBook} 
 from "./database.js";
 
+//todo: a function that sends console logs to the frontend Logger
+//barebones module pattern
+//preferring object composition over ES6 function for learning
+//setter explicity called in each getter or setter i'm using
+const frontLog = (() => {
+        //closure; function to wrap the data so it stays permanent
+        //return an object seeing as frontLog is an object
+
+        //private members
+        let buffer = new String();
+        //public members
+        return {
+            setLogger: (newLog) => {
+                buffer = newLog;
+            }
+        };
+
+    });
+
 const app = express();
 
 app.use(express.json());
@@ -70,7 +89,7 @@ app.post("/insert", async (req,res) => {
         fs.mkdirSync(logsFolderPath);
       }
     //check if folder exists, if not, make it
-    console.log(JSON.stringify(req.body));
+    console.log(req.body.length); //log response
     let fileContent = JSON.stringify(req.body);
 
     fs.writeFile(`${logsFolderPath}${fileName}`, fileContent, (err)=> {
