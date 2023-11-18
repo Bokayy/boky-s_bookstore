@@ -31,6 +31,16 @@ export async function getBookByID(id){
         [id]);
     return rows[0]; // return the first object in the array;
 }
+export async function getBookByISBN(id){
+    const [rows] = await pool.query(
+        `SELECT *
+        FROM books
+        WHERE id = ?
+        LIMIT 1`,
+        [id]);
+    return rows[0]; // return the first object in the array;
+}
+
 export async function createBook(title,subtitle,isbn13,price,image,url){
     const [result] = await pool.query(`
     INSERT INTO
