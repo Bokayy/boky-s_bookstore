@@ -5,6 +5,7 @@ import path from 'path';
 import * as url from 'url';
     const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 //used to store logs in a path
+let insertReq = '';
 
 import {
     getAllBooks,
@@ -14,6 +15,8 @@ import {
     JSONtoDB,
     searchBook} 
 from "./database.js";
+
+import { inputValidation } from "./scraper_endpoint.js";
 
 //todo: a function that sends console logs to the frontend Logger
 //barebones module pattern
@@ -75,8 +78,7 @@ app.post("/books", async (req, res) => {
     res.status(201).send(note);
 });
 
-//get books from scraper
-app.post("/insert", async (req,res) => {
+function createLog(fileContent){
     //give the log the name of the current date and time
     const currentDateTime = new Date();
     const formattedDateTime = currentDateTime.toISOString().replace(/:/g, '-');
@@ -87,11 +89,7 @@ app.post("/insert", async (req,res) => {
     //check if folder exists, if not, make it
     if (!fs.existsSync(logsFolderPath)) {
         fs.mkdirSync(logsFolderPath);
-      }
-    //check if folder exists, if not, make it
-    //console.log(req.body.length); //log response
-    console.log(req.body);
-    let fileContent = JSON.stringify(req.body);
+        }
 
     fs.writeFile(`${logsFolderPath}${fileName}`, fileContent, (err)=> {
         if (err) {
@@ -100,6 +98,13 @@ app.post("/insert", async (req,res) => {
             console.log("text file created successfully");
         }
     })
+}
+
+//get books from scraper
+app.post("/insert", async (req,res) => {
+    const stringified = JSON.stringify(req.body);
+    createLog(stringified);
+    inputValidation(stringified);
     res.status(200).send("backend: success");
 });
 

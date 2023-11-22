@@ -124,3 +124,19 @@ export async function JSONtoDB(jsonObj)
     console.log(insertedBook);
     return insertedBook;
 };
+
+export async function getBookByISBNMultiple(arrayOfISBNs){
+    console.log(arrayOfISBNs);
+    try {
+        const [result] = await pool.query(
+        `
+        SELECT id
+        FROM books
+        WHERE isbn13 IN (${arrayOfISBNs});`);
+        return result;
+    }
+    catch (error) {
+        console.error('Error executing getBookByISBNMultiple query:', error);
+        throw error;
+      }
+}
