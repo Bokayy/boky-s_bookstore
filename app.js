@@ -104,8 +104,12 @@ function createLog(fileContent){
 app.post("/insert", async (req,res) => {
     const stringified = JSON.stringify(req.body);
     createLog(stringified);
-    inputValidation(stringified);
-    res.status(200).send("backend: success");
+    if (await inputValidation(stringified) == true){
+        res.status(200).send("Input data valid, adding to database");
+    }
+    else {
+        res.status(500).send("Input data invalid");
+    }
 });
 
 //init server, entrypoint

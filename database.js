@@ -126,7 +126,6 @@ export async function JSONtoDB(jsonObj)
 };
 
 export async function getBookByISBNMultiple(arrayOfISBNs){
-    console.log(arrayOfISBNs);
     try {
         const [result] = await pool.query(
         `

@@ -1,47 +1,67 @@
 import { JSONtoDB } from "./database.js";
 import {getBookByISBNMultiple} from "./database.js";
 
+let reqBody = new Array();
+
 //check for duplicates
 async function checkDuplicates(reqBody){
     let isbnArray = reqBody.reduce((acc,current) => {
         acc.push(current.isbn13);
         return acc;
     }, []);
-    console.log(await getBookByISBNMultiple(isbnArray));
+    if ([getBookByISBNMultiple(isbnArray)] == 1){
+        console.log('a book with the same isbn already exists');
+        return false;
+    }
+    else {
+        return true; //no duplicates found
+    }
 }
 
-export function inputValidation(scraperRequest){
-    //reqBody request is an array of objects
-    let reqBody = JSON.parse(scraperRequest);
-    let numberOfBooks = Object.keys(reqBody).length;
-
-    //check if object has all six values
+function checkSixValues(reqBody){
+    let returnValue = false;
     reqBody.forEach(x => {
         if ((Object.keys(x).length) != 6){
             console.log(x, "has an invalid number of entries");
-        } ;
-    });
-    //"naive" validation (stupid)
-    //is every element in every object a string
-    reqBody.forEach(x => {
-        if (typeof x.title !== 'string'){
-            console.log(x.title, "is not a string");
-        }
-        if (typeof x.subtitle !== 'string'){
-            console.log(x.subtitle, "is not a string");
-        }
-        if (typeof x.isbn13 !== 'string'){
-            console.log(x.isbn13, "is not a string");
-        }
-        if (typeof x.price !== 'string'){
-            console.log(x.price, "is not a string");
-        }
-        if (typeof x.image !== 'string'){
-            console.log(x.image, "is not a string");
-        }
-        if (typeof x.url !== 'string'){
-            console.log(x.url, "is not a string");
+            returnValue = false;
+        } else {
+        returnValue = true;
         }
     });
-    checkDuplicates(reqBody);
+    return returnValue;
+}
+
+function areValidStrings(reqBody){
+    let returnValue = false;
+ reqBody.forEach((y,objIndex) => {
+    Object.values(y).forEach((z,valindex) => {
+        //console.log(z);
+        if(typeof z !== 'string') {
+            console.log(`Object ${objIndex}, ${y} is not a string`)
+            returnValue = false;
+        }
+        else {
+            returnValue = true;
+        }
+    });
+ });
+ return returnValue; //no duplicates found
+}
+
+export async function inputValidation(scraperRequest){
+    //reqBody request is an array of objects
+    reqBody = JSON.parse(scraperRequest);
+
+    //new architecture, list of flags (true or false)
+    const sixValues = checkSixValues(reqBody);
+    const valuesAreStrings = areValidStrings(reqBody);
+    const noDuplicates = await checkDuplicates(reqBody);
+
+    if (sixValues && valuesAreStrings && noDuplicates){
+        console.log("input array is valid ");
+        return true;
+    }
+    else {
+        console.log("invalid input array, check console");
+    }
 }
