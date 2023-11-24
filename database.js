@@ -103,35 +103,44 @@ const testJsonObj=
 };
 //import JSON to Database
 //todo: validation (is every field filled in and valid)
-export async function JSONtoDB(jsonObj)
+export async function JSONArraytoDB(jsonArray)
 {   
-    jsonObj["price"] = jsonObj["price"].replace(/\$/g, ''); //dollar sign removal
-    const [result] = await pool.query
-    (`
-        INSERT INTO
-        books(title,subtitle,isbn13,price,image,url)
-        VALUES(?,?,?,?,?,?)`,
-
-        [jsonObj["title"],
+    let insertionIDs = [];
+    jsonArray = JSON.parse(jsonArray);
+    //returns an array of arrays
+    const values = jsonArray.map(jsonObj => [
+        jsonObj["title"],
         jsonObj["subtitle"],
         jsonObj["isbn13"],
-        jsonObj["price"],
+        jsonObj["price"].replace(/\$/g, ''), // Dollar sign removal
         jsonObj["image"],
-        jsonObj["url"]]
-    );
-    const id = result.insertId;
-    const insertedBook = await getBookByID(id);
-    console.log(insertedBook);
-    return insertedBook;
+        jsonObj["url"]
+    ]);
+    try {
+        const [result] = await pool.query(
+            `
+            INSERT INTO
+            books(title, subtitle, isbn13, price, image, url)
+            VALUES ?`,
+            [values]
+        );
+        insertionIDs = insertionIDs.concat(result.insertId);
+        return insertionIDs;
+    } catch(error) {
+        console.error('Error executing JSONArraytoDB query:', error);
+        throw error;
+    }
 };
 
 export async function getBookByISBNMultiple(arrayOfISBNs){
+    //console.log(arrayOfISBNs);
     try {
         const [result] = await pool.query(
         `
         SELECT id
         FROM books
         WHERE isbn13 IN (${arrayOfISBNs});`);
+        console.log(result);
         return result;
     }
     catch (error) {

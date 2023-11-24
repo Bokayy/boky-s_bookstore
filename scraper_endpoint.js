@@ -1,4 +1,3 @@
-import { JSONtoDB } from "./database.js";
 import {getBookByISBNMultiple} from "./database.js";
 
 let reqBody = new Array();
@@ -9,7 +8,8 @@ async function checkDuplicates(reqBody){
         acc.push(current.isbn13);
         return acc;
     }, []);
-    if ([getBookByISBNMultiple(isbnArray)] == 1){
+    let duplicates = await getBookByISBNMultiple(isbnArray);
+    if (duplicates.length > 0){
         console.log('a book with the same isbn already exists');
         return false;
     }
@@ -56,12 +56,15 @@ export async function inputValidation(scraperRequest){
     const sixValues = checkSixValues(reqBody);
     const valuesAreStrings = areValidStrings(reqBody);
     const noDuplicates = await checkDuplicates(reqBody);
+    //undefined doesn't show up as 0 :/
+    const numberOfBooks = reqBody.length;
 
     if (sixValues && valuesAreStrings && noDuplicates){
-        console.log("input array is valid ");
-        return true;
+        console.log("input array is valid");
+        return numberOfBooks; //
     }
     else {
         console.log("invalid input array, check console");
+        return 0;
     }
 }

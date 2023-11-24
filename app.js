@@ -12,7 +12,7 @@ import {
     createBook,
     getBookByExactTitle,
     getBookByID,
-    JSONtoDB,
+    JSONArraytoDB,
     searchBook} 
 from "./database.js";
 
@@ -104,11 +104,13 @@ function createLog(fileContent){
 app.post("/insert", async (req,res) => {
     const stringified = JSON.stringify(req.body);
     createLog(stringified);
-    if (await inputValidation(stringified) == true){
-        res.status(200).send("Input data valid, adding to database");
+    let numberOfBooks = await inputValidation(stringified);
+    if (numberOfBooks !== 0) {
+        let result = await JSONArraytoDB(stringified)
+        res.status(200).send(`added item id's:${result}`);    
     }
     else {
-        res.status(500).send("Input data invalid");
+        res.status(500).send("Input data invalid, check backend console log");
     }
 });
 
