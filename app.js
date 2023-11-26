@@ -58,6 +58,8 @@ app.get("/books", async (req, res) => {
 app.get("/books/search", async (req, res) => {
     const query = req.query.q;
     const books = await searchBook(query);
+    if(books === 0){return res.status(404).json({ error: "Book not found" });
+    }
     res.send(books);
 })
 
@@ -74,8 +76,8 @@ app.get("/books/:id(\\d+$)", async (req, res) => {
 //create new book
 app.post("/books", async (req, res) => {
     const {title,subtitle,isbn13,price,image,url} = req.body; //destructured the request
-    const note = await createBook(title,subtitle,isbn13,price,image,url);
-    res.status(201).send(note);
+    const book = await createBook(title,subtitle,isbn13,price,image,url);
+    res.status(201).send(book);
 });
 
 function createLog(fileContent){

@@ -65,6 +65,11 @@ export async function removeBook(id) {
 //results matched by title
 export async function searchBook(query){
     try {
+        if (query === undefined) {
+            //throw new Error('query undefined');
+            return 0;
+          }        
+        console.log(query);
         const [result] = await pool.query(
         `
         SELECT * 
@@ -74,23 +79,23 @@ export async function searchBook(query){
         OR LOWER(subtitle) LIKE 
         '%${query}%'`,
         [query.toLowerCase()]);
-        return searchWithMetadata(result);
+        return exhumeMetadata(result);
     }
     catch (error) {
         console.error('Error executing searchBook query:', error);
-        throw error;
+        //throw error;
       }
 }
-export function searchWithMetadata(query){
-    let total = (query.length.toString()); 
+export function exhumeMetadata(pool_query){
+    let total = (pool_query.length.toString()); 
     const page = "1" 
-    let books = query;  
-    let returnValue = {
+    let books = pool_query;  
+    let return_value = {
         "total": total,
         "page": page,
         "books": books,
     }
-    return returnValue;
+    return return_value;
 }
 const testJsonObj=
 {
