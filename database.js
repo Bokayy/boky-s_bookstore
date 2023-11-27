@@ -63,39 +63,50 @@ export async function removeBook(id) {
     return result;
   }
 //results matched by title
-export async function searchBook(query){
+export async function searchBook(queryObject){
     try {
-        if (query === undefined) {
+        if (queryObject.query === undefined) {
             //throw new Error('query undefined');
             return 0;
           }        
-        console.log(query);
         const [result] = await pool.query(
-        `
-        SELECT * 
-        FROM books 
-        WHERE LOWER(title) LIKE 
-        '%${query}%'
-        OR LOWER(subtitle) LIKE 
-        '%${query}%'`,
-        [query.toLowerCase()]);
-        return exhumeMetadata(result);
+            `
+            SELECT *
+            FROM books
+            WHERE LOWER(title) LIKE ?
+               OR LOWER(subtitle) LIKE ?
+            ORDER BY id
+            LIMIT 10 OFFSET ?
+            `,
+            [
+              `%${queryObject.query.toLowerCase()}%`,
+              `%${queryObject.query.toLowerCase()}%`,
+              parseInt(queryObject.page),
+            ]
+          );
+          const [total] = await pool.query(
+            `
+            SELECT COUNT(*)
+                FROM books
+                WHERE LOWER(title) LIKE ?
+                OR LOWER(subtitle) LIKE ?`,
+            [
+                `%${queryObject.query.toLowerCase()}%`,
+                `%${queryObject.query.toLowerCase()}%`
+            ]
+          )
+        console.log(Object.values(total[0]));
+        let returnObj = {
+            "total": Object.values(total[0]),
+            "page" : queryObject.page,
+            "books" : result 
+        }
+        return returnObj;
     }
     catch (error) {
         console.error('Error executing searchBook query:', error);
         //throw error;
       }
-}
-export function exhumeMetadata(pool_query){
-    let total = (pool_query.length.toString()); 
-    const page = "1" 
-    let books = pool_query;  
-    let return_value = {
-        "total": total,
-        "page": page,
-        "books": books,
-    }
-    return return_value;
 }
 const testJsonObj=
 {

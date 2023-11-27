@@ -56,8 +56,12 @@ app.get("/books", async (req, res) => {
 });
 
 app.get("/books/search", async (req, res) => {
-    const query = req.query.q;
-    const books = await searchBook(query);
+    //return an object containing the page and query parameters
+    const queryObject = {
+        query: req.query.q,
+        page : req.query.q2
+    } 
+    const books = await searchBook(queryObject);
     if(books === 0){return res.status(404).json({ error: "Book not found" });
     }
     res.send(books);
