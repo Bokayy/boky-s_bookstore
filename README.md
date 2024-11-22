@@ -10,8 +10,15 @@ mysql
 
 Guide to running the app:
 
-run the included "database.sql" after you've installed mysql on your pc 
-to populate the database.
+Upon installing MySQL and node (presuming a fresh GNU/Linux install)
+Enter the MySQL REPL via:
+mysql -u *username* -p *Enter*
+*insert PW*
+CREATE DATABASE bookstore;
+
+Exit; (to leave the MySQL REPL)
+
+mysql -u root -p bookstore < /path/to/bookstore.sql
 
 clone the repo, 
 inside of boky-s_bookstore/
@@ -20,7 +27,9 @@ and
 inside of boky-s_bookstore/bookApp
 run "npm run dev"
 
-The interface will now be running on localhost:9000!
+Keep an eye on your terminal to see which port the frontend will be running on!
+
+access via localhost:*port*
 
 Todo: 
 
@@ -30,6 +39,6 @@ api scraper to populate with more books from itbooks (JSONtoDB function expansio
 
 more CRUD
 
-Hosting on my VPS
+Hosting on my VPS - working on it now!
 
-etc...
+and whatever comes to mind if I find the project fun enough :)
