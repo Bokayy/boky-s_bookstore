@@ -22,14 +22,12 @@ mysql -u root -p bookstore < /path/to/bookstore.sql </br>
 
 clone the repo, 
 inside of boky-s_bookstore/
-run "npm run dev"
+run "npm run dev" -> The port is set in app.js as port 2339
 and
 inside of boky-s_bookstore/bookApp
-run "npm run dev"
+run "npm run dev" -> The port is set in bookApp\vite.config.js as 2337
 
-Keep an eye on your terminal to see which port the frontend will be running on!
-
-access via localhost:*port*
+access via localhost:*port* (Only the frontend)
 
 Todo: 
 
