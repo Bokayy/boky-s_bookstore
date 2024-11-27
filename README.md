@@ -11,14 +11,14 @@ mysql
 Guide to running the app:
 
 Upon installing MySQL and node (presuming a fresh GNU/Linux install)
-Enter the MySQL REPL via:
-mysql -u *username* -p *Enter*
-*insert PW*
-CREATE DATABASE bookstore;
-
-Exit; (to leave the MySQL REPL)
-
-mysql -u root -p bookstore < /path/to/bookstore.sql
+Enter the MySQL REPL via: </br>
+mysql -u *username* -p *Enter* </br>
+*insert PW* </br>
+CREATE DATABASE bookstore; </br>
+&nbsp;
+Exit; (to leave the MySQL REPL) </br>
+&nbsp;
+mysql -u root -p bookstore < /path/to/bookstore.sql </br>
 
 clone the repo, 
 inside of boky-s_bookstore/
