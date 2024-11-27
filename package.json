@@ -1,7 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "prod": "pm2 start app.js -i max --name bookstore_backend"
   },
   "dependencies": {
     "dotenv": "^16.3.1",

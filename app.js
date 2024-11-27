@@ -3,8 +3,7 @@ import fs from 'fs';
 import path from 'path';
 //used to store logs in a path
 import * as url from 'url';
-    const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
-//used to store logs in a path
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url)); //used to store logs in a path
 let insertReq = '';
 
 import {
