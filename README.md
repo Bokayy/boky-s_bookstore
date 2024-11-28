@@ -24,10 +24,10 @@ mysql -u root -p bookstore < /path/to/bookstore.sql
 </br>
 Database access credentials are accessed in database.js via an .env file which has to be created within the root directory. </br>
 env file example:
->MYSQL_HOST='127.0.0.1'
->MYSQL_USER='database_user'
->MYSQL_PASSWORD='databasepassword'
->MYSQL_DATABASE='bookstore'
+>MYSQL_HOST='127.0.0.1' </br>
+>MYSQL_USER='database_user' </br>
+>MYSQL_PASSWORD='databasepassword' </br>
+>MYSQL_DATABASE='bookstore' </br>
 </br>
 Database credentials are accessesed within database.js
 &nbsp;
