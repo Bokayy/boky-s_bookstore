@@ -6,10 +6,12 @@ Dependencies:
 node,
 mysql
 
-
-
 Guide to running the app:
-
+</br>
+First, you have to clone the app and its submodule:
+</br>
+git clone --recurse-submodules https://github.com/Bokayy/boky-s_bookstore.git
+</br>
 Upon installing MySQL and node (presuming a fresh GNU/Linux install)
 Enter the MySQL REPL via: </br>
 mysql -u *username* -p *Enter* </br>
