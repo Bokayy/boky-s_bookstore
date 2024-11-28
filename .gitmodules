@@ -1,3 +1,4 @@
 [submodule "bookApp"]
 	path = bookApp
 	url = https://github.com/Bokayy/bookApp
+	branch = backend_compatible
