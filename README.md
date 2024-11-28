@@ -7,11 +7,11 @@ node,
 mysql
 
 Guide to running the app:
-</br>
+</br>&nbsp;
 First, you have to clone the app and its submodule:
 </br>
 git clone --recurse-submodules https://github.com/Bokayy/boky-s_bookstore.git
-</br>
+</br>&nbsp;
 Upon installing MySQL and node (presuming a fresh GNU/Linux install)
 Enter the MySQL REPL via: </br>
 mysql -u *username* -p *Enter* </br>
@@ -32,7 +32,6 @@ env file example:
 >MYSQL_DATABASE='bookstore' </br>
 </br>
 &nbsp;
-</br>
 Running the application (both the server and frontend): </br>
 clone the repo, 
 inside of boky-s_bookstore/
