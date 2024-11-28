@@ -19,7 +19,17 @@ CREATE DATABASE bookstore; </br>
 Exit; (to leave the MySQL REPL) </br>
 &nbsp;
 mysql -u root -p bookstore < /path/to/bookstore.sql </br>
-
+&nbsp;
+Database access credentials are accessed in database.js via an .env file which has to be created within the root directory. </br>
+env file example:
+>MYSQL_HOST='127.0.0.1'
+>MYSQL_USER='database_user'
+>MYSQL_PASSWORD='databasepassword'
+>MYSQL_DATABASE='bookstore'
+</br>
+Database credentials are accessesed within database.js
+&nbsp;
+</br>
 clone the repo, 
 inside of boky-s_bookstore/
 run "npm run dev" -> The port is set in app.js as port 2339
