@@ -18,8 +18,20 @@ CREATE DATABASE bookstore; </br>
 &nbsp;
 Exit; (to leave the MySQL REPL) </br>
 &nbsp;
-mysql -u root -p bookstore < /path/to/bookstore.sql </br>
-
+mysql -u root -p bookstore < /path/to/bookstore.sql
+</br>
+&nbsp;
+</br>
+Database access credentials are accessed in database.js via an .env file which has to be created within the root directory. </br>
+env file example:
+>MYSQL_HOST='127.0.0.1' </br>
+>MYSQL_USER='database_user' </br>
+>MYSQL_PASSWORD='databasepassword' </br>
+>MYSQL_DATABASE='bookstore' </br>
+</br>
+&nbsp;
+</br>
+Running the application (both the server and frontend): </br>
 clone the repo, 
 inside of boky-s_bookstore/
 run "npm run dev" -> The port is set in app.js as port 2339
@@ -31,12 +43,6 @@ access via localhost:*port* (Only the frontend)
 
 Todo: 
 
-input validation
-
-api scraper to populate with more books from itbooks (JSONtoDB function expansion)
-
-more CRUD
-
-Hosting on my VPS - working on it now!
-
-and whatever comes to mind if I find the project fun enough :)
+Implement API Scraper (to download currently unavailable books) - code already exists
+Implement pagination dots at the bottom of the screen
+Search and Filter functions (to find the optimal way of balancing requests and saving data client side)
