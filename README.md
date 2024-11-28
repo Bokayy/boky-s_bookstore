@@ -18,8 +18,10 @@ CREATE DATABASE bookstore; </br>
 &nbsp;
 Exit; (to leave the MySQL REPL) </br>
 &nbsp;
-mysql -u root -p bookstore < /path/to/bookstore.sql </br>
+mysql -u root -p bookstore < /path/to/bookstore.sql
+</br>
 &nbsp;
+</br>
 Database access credentials are accessed in database.js via an .env file which has to be created within the root directory. </br>
 env file example:
 >MYSQL_HOST='127.0.0.1'
