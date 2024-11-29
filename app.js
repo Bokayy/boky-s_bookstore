@@ -120,7 +120,7 @@ app.post("/insert", async (req,res) => {
 });
 
 //init server, entrypoint
-app.listen(2339, ()=> {
+app.listen(2053, '0.0.0.0', ()=> {
     console.log('Server is running on port 2339');
 })
 
