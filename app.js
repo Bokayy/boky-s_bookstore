@@ -3,8 +3,17 @@ import fs from 'fs';
 import path from 'path';
 //used to store logs in a path
 import * as url from 'url';
+
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url)); //used to store logs in a path
 let insertReq = '';
+const allowedOrigins = [
+    'http://localhost:2337',
+    'http://localhost:2053',
+    'http://0.0.0.0:2337',
+    'https://0.0.0.0:2053',
+    'http://boris-milojevic.from.hr',
+    'https://boris-milojevic.from.hr',
+]
 
 import {
     getAllBooks,
@@ -42,13 +51,13 @@ app.use(express.json());
 
 //CORS request error prevention
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:2337'); //the port the frontend is running on
-    res.header('Access-Control-Allow-Origin', 'http://0.0.0.0:2337'); //Whatever address the FE is running on
-    res.header('Access-Control-Allow-Origin', 'https://0.0.0.0:2053'); //Backend port
-    res.header('Access-Control-Allow-Origin', 'https://boris-milojevic.from.hr'); //Backend port
-    res.header('Access-Control-Allow-Origin', 'http://boris-milojevic.from.hr'); //Backend port (again)
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); //which http methods are allowed
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization'); //headers (not sure)
+    const origin = req.headers.origin;
+
+    if (allowedOrigins.includes(origin)) {
+        res.header('Access-Control-Allow-Origin', origin);
+    }
+    res.header('Access-Control-Allow-Methods', 'GET'); // Allow GET requests
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allowed headers
     next();
   });
 
