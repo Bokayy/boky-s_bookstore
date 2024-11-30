@@ -46,6 +46,7 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'http://0.0.0.0:2337'); //Whatever address the FE is running on
     res.header('Access-Control-Allow-Origin', 'https://0.0.0.0:2053'); //Backend port
     res.header('Access-Control-Allow-Origin', 'https://boris-milojevic.from.hr'); //Backend port
+    res.header('Access-Control-Allow-Origin', 'http://boris-milojevic.from.hr'); //Backend port (again)
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); //which http methods are allowed
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization'); //headers (not sure)
     next();
